@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.springboot.mapper.AdminMapper">
+    <select id="selectByUsername" parameterType="string" resultType="com.example.springboot.entity.UserInformation">
+        SELECT * FROM `user` WHERE `username` = #{username}
+    </select>
+
+    <insert id="insertUser" parameterType="com.example.springboot.entity.UserRegister">
+        INSERT INTO user (
+        username,
+        password,
+        email,
+        phone
+        ) VALUES (
+        #{username},
+        #{password},
+        #{email},
+        #{phone}
+        )
+    </insert>
+
+
+    <select id="selectByadminUsername" parameterType="string" resultType="com.example.springboot.entity.UserInformation">
+        SELECT * FROM `admin` WHERE `admin` = #{username}
+    </select>
+
+    <insert id="insertadminUser" parameterType="com.example.springboot.entity.UserRegister">
+        INSERT INTO admin (
+            admin,
+            password,
+            email,
+            phone
+        ) VALUES (
+            #{username},
+            #{password},
+            #{email},
+            #{phone}
+            )
+    </insert>
+</mapper>

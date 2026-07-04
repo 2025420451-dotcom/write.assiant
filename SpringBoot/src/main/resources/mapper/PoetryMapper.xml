@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.springboot.mapper.PoetryMapper">
+    <update id="updatePoetry" >
+        UPDATE `poetry` SET title = #{title},author = #{author},content=#{content} WHERE id=#{id};
+    </update>
+
+    <select id="selectAll" parameterType="string" resultType="com.example.springboot.entity.Poetry">
+        SELECT * FROM `poetry`
+    </select>
+
+    <insert id="insertPoetry">
+        INSERT INTO poetry (
+        title,
+        author,
+        content
+        ) VALUES (
+        #{title},
+        #{author},
+        #{content}
+         )
+    </insert>
+
+    <delete id="deletePoetry" parameterType="Integer">
+        delete from `poetry` where id = #{id}
+    </delete>
+
+    <select id="selectByKeyword" resultType="com.example.springboot.entity.Poetry">
+        SELECT * FROM `poetry`
+        <where>
+            <!-- 只有当 keyword 不为空时，才添加搜索条件 -->
+            <if test="keyword != null and keyword != ''">
+                title LIKE CONCAT('%',#{keyword},'%')
+                OR author LIKE CONCAT('%',#{keyword},'%')
+                OR content LIKE CONCAT('%',#{keyword},'%')
+            </if>
+        </where>
+    </select>
+</mapper>

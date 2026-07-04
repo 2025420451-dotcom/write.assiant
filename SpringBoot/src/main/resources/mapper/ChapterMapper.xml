@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.springboot.mapper.ChapterMapper">
+    <resultMap id="ChapterMap" type="com.example.springboot.entity.Chapter">
+        <id property="id" column="id"/>
+        <result property="volumeId" column="volume_id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="sort" column="sort"/>
+        <result property="createdAt" column="created_at"/>
+    </resultMap>
+
+    <select id="selectByVolumeId" resultType="com.example.springboot.entity.Chapter">
+        SELECT * FROM chapters
+        WHERE volume_id = #{volumeId}
+        ORDER BY sort
+    </select>
+
+    <insert id="insert" parameterType="com.example.springboot.entity.Chapter">
+        INSERT INTO chapters (volume_id, title, content, sort)
+        VALUES (#{volumeId}, #{title}, #{content}, #{sort})
+    </insert>
+
+    <update id="update" parameterType="com.example.springboot.entity.Chapter">
+        UPDATE chapters SET
+                           title = #{title},
+                           content = #{content},
+                           sort = #{sort}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM chapters WHERE id = #{id}
+    </delete>
+
+    <delete id="deleteByVolumeId" parameterType="int">
+        DELETE FROM chapters WHERE volume_id = #{volumeId}
+    </delete>
+
+    <select id="selectById" resultMap="ChapterMap" parameterType="int">
+        SELECT * FROM chapters WHERE id = #{id}
+    </select>
+
+    <select id="countWordsByWork" resultType="map">
+        SELECT w.titile AS title, IFNULL(SUM(CHAR_LENGTH(c.content)),0) AS words
+        FROM works w
+        LEFT JOIN volumes v ON w.id = v.work_id
+        LEFT JOIN chapters c ON v.id = c.volume_id
+        <where>
+            <if test="start != null">AND c.created_at &gt;= #{start}</if>
+            <if test="end != null">AND c.created_at &lt;= #{end}</if>
+        </where>
+        GROUP BY w.id, w.titile
+        ORDER BY words DESC
+    </select>
+</mapper>

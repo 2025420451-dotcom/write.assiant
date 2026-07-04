@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.springboot.mapper.AAAAAUserMapper">
+
+    <select id="selectAll" resultType="com.example.springboot.entity.AAAAAUser">
+        select * from `user`
+        <where>
+            <if test="username != null">username like concat('%', #{admin}, '%')</if>
+        </where>
+        order by id asc
+    </select>
+
+    <insert id="insert">
+        insert into `user` (username, password, phone, email)
+        values(#{username}, #{password}, #{phone}, #{email})
+    </insert>
+
+    <update id="updateById">
+        update `user` set username = #{username}, password = #{password}, phone = #{phone}, email = #{email}
+        where id = #{id}
+    </update>
+
+</mapper>

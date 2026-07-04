@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.springboot.mapper.AdminFeedBackMapper">
+
+    <select id="getallfeedback" resultType="com.example.springboot.entity.Feedback">
+        SELECT * FROM `feedback` ORDER BY create_time DESC
+    </select>
+
+    <update id="updateStatus">
+        UPDATE feedback SET status = #{status},handle_time = NOW() WHERE id = #{id}
+    </update>
+
+</mapper>

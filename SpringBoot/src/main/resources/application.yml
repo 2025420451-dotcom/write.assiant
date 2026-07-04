@@ -1,0 +1,14 @@
+server:
+  port: 9999
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 'zxcvbnmZBD99&'
+    url: jdbc:mysql://localhost:3306/blcak_cat?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true

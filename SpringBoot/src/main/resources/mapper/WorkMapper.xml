@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.springboot.mapper.WorkMapper">
+    <insert id="insertWorks" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO works (titile, userId, isDraft, created_at)
+        VALUES (#{titile}, #{userId}, #{isDraft}, NOW())
+    </insert>
+
+    <delete id="deleteById">
+        DELETE FROM works WHERE ID = #{id}
+    </delete>
+
+    <select id="selectAllWorks" resultType="com.example.springboot.entity.Works">
+        SELECT
+            id,
+            titile,
+            userId,
+            isDraft,
+            created_at
+        FROM works
+    </select>
+</mapper>

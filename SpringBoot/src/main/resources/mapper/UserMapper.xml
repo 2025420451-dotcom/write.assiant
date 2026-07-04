@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.springboot.mapper.UserMapper">
+
+
+    <!-- 根据ID查询用户 -->
+    <select id="selectById" resultType="com.example.springboot.entity.UserRegister">
+        SELECT id, username, email, phone
+        FROM user
+        WHERE id = #{userId}
+    </select>
+
+    <!-- 验证用户名唯一性 -->
+    <select id="existsUsername" resultType="int">
+        SELECT COUNT(*)
+        FROM user
+        WHERE username = #{username}
+          AND id != #{excludeId}
+    </select>
+
+    <!-- 更新用户信息（修正版） -->
+    <update id="updatePerson">
+        UPDATE user
+        <set>
+            <if test="username != null and username != ''">
+                username = #{username},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+</mapper>
